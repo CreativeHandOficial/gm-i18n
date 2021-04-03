@@ -1,6 +1,10 @@
 {
   "resources": [
+    {"id":{"name":"Sprite2","path":"sprites/Sprite2/Sprite2.yy",},"order":16,},
+    {"id":{"name":"oSwitchLocale3","path":"objects/oSwitchLocale3/oSwitchLocale3.yy",},"order":2,},
     {"id":{"name":"oSetup","path":"objects/oSetup/oSetup.yy",},"order":0,},
+    {"id":{"name":"Sprite1","path":"sprites/Sprite1/Sprite1.yy",},"order":15,},
+    {"id":{"name":"oSwitchLocale","path":"objects/oSwitchLocale/oSwitchLocale.yy",},"order":1,},
     {"id":{"name":"fntArial","path":"fonts/fntArial/fntArial.yy",},"order":0,},
     {"id":{"name":"rMain","path":"rooms/rMain/rMain.yy",},"order":0,},
   ],
