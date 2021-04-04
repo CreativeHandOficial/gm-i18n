@@ -33,3 +33,12 @@ function exportJson(_file_name, _data, _func) {
 	file_text_write_string(_file, script_execute(_func, _data));
 	file_text_close(_file);
 }
+
+function deleteLocalesFiles() {
+	if (file_exists(FILE_LOCALE)) {
+		file_delete(FILE_LOCALE);
+		show_debug_message("//////// INFO ////////");
+		show_debug_message(string(FILE_LOCALE) + "Has deleted!")
+		show_debug_message("////////////////");
+	}
+}

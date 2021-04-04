@@ -3,7 +3,9 @@
     {"id":{"name":"utilsGmI18n","path":"scripts/utilsGmI18n/utilsGmI18n.yy",},"order":1,},
     {"id":{"name":"gmi18n","path":"scripts/gmi18n/gmi18n.yy",},"order":0,},
     {"id":{"name":"oSetupi18n","path":"objects/oSetupi18n/oSetupi18n.yy",},"order":0,},
-    {"id":{"name":"fntArial","path":"fonts/fntArial/fntArial.yy",},"order":0,},
+    {"id":{"name":"sCheckbox","path":"sprites/sCheckbox/sCheckbox.yy",},"order":0,},
+    {"id":{"name":"fntPressStart","path":"fonts/fntPressStart/fntPressStart.yy",},"order":0,},
+    {"id":{"name":"oLang","path":"objects/oLang/oLang.yy",},"order":1,},
     {"id":{"name":"rMain","path":"rooms/rMain/rMain.yy",},"order":0,},
   ],
   "Options": [
