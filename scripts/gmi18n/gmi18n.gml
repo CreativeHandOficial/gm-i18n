@@ -1,4 +1,5 @@
 #macro FILE_LOCALE "locales.json"
+#macro DELIMITER "."
 
 function initGmi18n() {
 	
@@ -133,6 +134,34 @@ function useTranslation (_param) {
 		throw "Incorrect format";
 	}
 	
+	var _min_length = 0;
+	var _params = explode(DELIMITER, _param);
+	var _length = array_length(_params);
+	
+	if (_length > _min_length) {
+
+		var _temp_translator = _translator;
+		var i = 0;
+
+		while (i < _length) {
+
+			if (!is_struct(_temp_translator)) {
+				return _param;
+				break;
+			}
+
+			if (variable_struct_exists(_temp_translator, _params[i])) {
+				_temp_translator = variable_struct_get(_temp_translator, _params[i]);
+			}
+			++i;
+		}
+		
+		if (is_struct(_temp_translator)) {
+			return _param
+		}
+				
+		return _temp_translator;
+	}
 	
 	if (variable_struct_exists(_translator, _param)) {
 		return variable_struct_get(_translator, _param);

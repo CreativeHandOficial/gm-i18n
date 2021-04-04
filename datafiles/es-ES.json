@@ -1,7 +1,9 @@
 {
   "welcome": "Bienvenido",
   "item": {
-    "potion": "Pocion"
+    "potion": {
+      "mana": "Pocion"
+    }
   },
   "new_game": "Nuevo juego"
 }
