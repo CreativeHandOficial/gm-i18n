@@ -7,6 +7,8 @@ function initGmi18n() {
 		global.__locales = [];
 		global.__defaultLocale = undefined;
 		global.__translator = undefined;
+		global.__fallBackLocale = undefined;
+		global.__translatorFallBackLocale = undefined;
 	}
 
 }
@@ -14,6 +16,7 @@ function initGmi18n() {
 ///@desc Setup Gmi18n
 /// @param {struct} _locales*
 /// @param {string} _defaultLocale*
+/// @param {string} _fallBackLocale
 function gmi18nSetup() {
 	var _count = argument_count;
 	
@@ -24,12 +27,15 @@ function gmi18nSetup() {
 	if (_count < 2) {;
 		throw "Argument defaultLocale has required";
 	}
-
+		
 	var _locales = argument[0];
 	var _defaultLocale = argument[1];
+	var _fallBackLocale = _count > 2 ? argument[2] : undefined;
+	
 	initGmi18n();
 	handleLocalesFile(_locales);
 	switchLocale(_defaultLocale);
+	setFallBackLocale(_fallBackLocale);
 }
 
 
@@ -64,7 +70,62 @@ function switchLocale(_locale) {
 	handleTranslatorFile();
 }
 
-function handleTranslatorFile () {
+function setFallBackLocale(_fallBackLocale) {
+
+	if (is_undefined(_fallBackLocale)) {
+		return;
+	}
+
+	if (!is_string(_fallBackLocale)) {
+		throw "Incorrect format";
+	}
+	
+	global.__fallBackLocale = _fallBackLocale;
+	handleFallBackLocaleFile();
+}
+
+function handleFallBackLocaleFile() {
+	
+	var _locales = getLocales();
+	var _length  = array_length(_locales);
+	var _file = undefined;
+	var _translator = undefined;
+	var _fallBackLocale = global.__fallBackLocale;
+	var _defaultLocale = global.__defaultLocale;
+	
+	if (is_undefined(_fallBackLocale)) {
+		return;
+	}
+	
+	if (global.__fallBackLocale == global.__defaultLocale) {
+		_translator = global.__translator
+	}
+	
+	if (_fallBackLocale != _defaultLocale) {
+		for (var i = 0; i < _length; ++i) {
+		    if (_locales[i] == _fallBackLocale) {
+				_file = _locales[i].file; 
+				break; 
+			}
+		}
+		
+		if (!file_exists(_file)) {
+			throw _file + " does not exist";
+		}
+	
+		_translator = importJson(_file, json_parse);
+	
+		if (!is_struct(_translator)) {
+			throw "Incorrect " + _file + " format";
+		}
+		
+	}
+	  
+	global.__translatorFallBackLocale = _translator;
+	
+}
+
+function handleTranslatorFile() {
 	
 	var _locales = getLocales();
 	var _length  = array_length(_locales);
@@ -120,23 +181,34 @@ function getCurrentLocale() {
 }
 
 /// @param {struct} _param
-function useTranslation (_param) {
+function useTranslation(_param) {
 	
 	initGmi18n();
+	
+	var _translator, 
+		_hasFallBackLocale = false,
+		_hasSearchFallBackLocale = false,
+		_translatorFallBackLocale = undefined;
 	
 	if (is_undefined(global.__translator)) {
 		throw "It has not been defined";
 	}
 	
-	var _translator = global.__translator;
+	if (!is_undefined(global.__translatorFallBackLocale)) {
+		_hasFallBackLocale = true;
+		_translatorFallBackLocale = global.__translatorFallBackLocale;
+	}
+	
+	_translator = global.__translator;
 	
 	if (!is_string(_param)) {
 		throw "Incorrect format";
 	}
 	
-	var _min_length = 0;
+	var _min_length = 1;
 	var _params = explode(DELIMITER, _param);
 	var _length = array_length(_params);
+	
 	
 	if (_length > _min_length) {
 
@@ -145,13 +217,30 @@ function useTranslation (_param) {
 
 		while (i < _length) {
 
-			if (!is_struct(_temp_translator)) {
+			if (!is_struct(_temp_translator)) {			
+				
+				if (_hasFallBackLocale && !_hasSearchFallBackLocale) {
+					_hasSearchFallBackLocale = true;
+					_temp_translator = _translatorFallBackLocale;
+					i = 0;
+					continue;
+				}
+
 				return _param;
 				break;
 			}
 
 			if (variable_struct_exists(_temp_translator, _params[i])) {
 				_temp_translator = variable_struct_get(_temp_translator, _params[i]);
+			} else {
+
+				if (_hasFallBackLocale && !_hasSearchFallBackLocale) {
+					_hasSearchFallBackLocale = true;
+					_temp_translator = _translatorFallBackLocale;
+					i = 0;
+					continue;
+				}
+
 			}
 			++i;
 		}
@@ -165,6 +254,12 @@ function useTranslation (_param) {
 	
 	if (variable_struct_exists(_translator, _param)) {
 		return variable_struct_get(_translator, _param);
+	}
+	
+	if (_hasFallBackLocale) {
+		if (variable_struct_exists(_translatorFallBackLocale, _param)) {
+			return variable_struct_get(_translatorFallBackLocale, _param);
+		}
 	}
 	
 	return _param;

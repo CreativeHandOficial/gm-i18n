@@ -6,5 +6,7 @@ locales = [
 	{ code: "en-US", file: "en-US.json", lang: "English" },
 	{ code: "es-ES", file: "es-ES.json", lang: "Espanhol" }
 ];
+defaultLocale = "pt-BR";
+fallBackLocale = "pt-BR";
 
-gmi18nSetup(locales, "pt-BR");
+gmi18nSetup(locales, defaultLocale, fallBackLocale);
