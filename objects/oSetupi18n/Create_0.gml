@@ -7,4 +7,4 @@ locales = [
 	{ code: "es-ES", file: "es-ES.json", lang: "Espanhol" }
 ];
 
-gmi18nSetup(locales, "pt-BR");
+gmi18nSetup(locales, "es-ES");

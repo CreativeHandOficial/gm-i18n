@@ -1,5 +1,7 @@
 {
-  "root": {
-    "welcome": "Bem vindo"
-  }
+  "welcome": "Bem vindo",
+  "item": {
+    "potion": "Pocao"
+  },
+  "new_game": "Novo jogo"
 }

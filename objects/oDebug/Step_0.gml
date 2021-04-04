@@ -8,9 +8,15 @@ if (debug_mode) {
 	
 	// Re-Setup
 	if (keyboard_check_pressed(ord("R"))) {
-		gmi18nSetup(locales);
+		gmi18nSetup(oSetupi18n.locales, "pt-BR");
 		show_debug_message("//////// INFO ////////");
 		show_debug_message("Has Re-setup")
 		show_debug_message("////////////////");
+	}
+	
+	if (keyboard_check_pressed(ord("A"))) {
+		if (room != rText) {
+			room_goto(rText);
+		}
 	}
 }

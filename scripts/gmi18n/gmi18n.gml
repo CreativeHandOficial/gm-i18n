@@ -5,6 +5,7 @@ function initGmi18n() {
 	if (!variable_global_exists("__locales")) {
 		global.__locales = [];
 		global.__defaultLocale = undefined;
+		global.__translator = undefined;
 	}
 
 }
@@ -58,6 +59,35 @@ function switchLocale(_locale) {
 	}
 	
 	global.__defaultLocale = _locale;
+	
+	handleTranslatorFile();
+}
+
+function handleTranslatorFile () {
+	
+	var _locales = getLocales();
+	var _length  = array_length(_locales);
+	var _file = undefined;
+	var _translator = undefined;
+
+	for (var i = 0; i < _length; ++i) {
+	    if (_locales[i].code == getCurrentLocale()) {
+			_file = _locales[i].file;
+			break;
+		}
+	}
+
+	if (!file_exists(_file)) {
+		throw _file + " does not exist";
+	}
+	
+	var _translator = importJson(_file, json_parse);
+	
+	if (!is_struct(_translator)) {
+		throw "Incorrect " + _file + " format";
+	}
+	
+	global.__translator = _translator;
 }
 
 function getLocales() {
@@ -86,4 +116,27 @@ function getCurrentLocale() {
 	}
 	
 	return undefined;
+}
+
+/// @param {struct} _param
+function useTranslation (_param) {
+	
+	initGmi18n();
+	
+	if (is_undefined(global.__translator)) {
+		throw "It has not been defined";
+	}
+	
+	var _translator = global.__translator;
+	
+	if (!is_string(_param)) {
+		throw "Incorrect format";
+	}
+	
+	
+	if (variable_struct_exists(_translator, _param)) {
+		return variable_struct_get(_translator, _param);
+	}
+	
+	return _param;
 }

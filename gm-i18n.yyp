@@ -2,6 +2,8 @@
   "resources": [
     {"id":{"name":"utilsGmI18n","path":"scripts/utilsGmI18n/utilsGmI18n.yy",},"order":1,},
     {"id":{"name":"oDebug","path":"objects/oDebug/oDebug.yy",},"order":2,},
+    {"id":{"name":"rText","path":"rooms/rText/rText.yy",},"order":1,},
+    {"id":{"name":"oText","path":"objects/oText/oText.yy",},"order":3,},
     {"id":{"name":"gmi18n","path":"scripts/gmi18n/gmi18n.yy",},"order":0,},
     {"id":{"name":"oSetupi18n","path":"objects/oSetupi18n/oSetupi18n.yy",},"order":0,},
     {"id":{"name":"sCheckbox","path":"sprites/sCheckbox/sCheckbox.yy",},"order":0,},
@@ -28,6 +30,7 @@
   },
   "RoomOrderNodes": [
     {"roomId":{"name":"rMain","path":"rooms/rMain/rMain.yy",},},
+    {"roomId":{"name":"rText","path":"rooms/rText/rText.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/Sprites.yy","order":1,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
@@ -45,6 +48,9 @@
   ],
   "IncludedFiles": [
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"PT-br.json","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"locales.json","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"en-US.json","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"es-ES.json","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.2.556",
