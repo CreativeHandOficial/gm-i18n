@@ -1,22 +1,35 @@
 #macro FILE_LOCALE "locales.json"
 
-///@desc Setup Gmi18n
-/// @param {Struct} _locales
-function gmi18nSetup() {
-	
-	var _locales = argument[0];
-	initGmi18n();
-	handleLocalesFile(_locales);
-
-}
-
 function initGmi18n() {
 	
 	if (!variable_global_exists("__locales")) {
 		global.__locales = [];
+		global.__defaultLocale = undefined;
 	}
 
 }
+
+///@desc Setup Gmi18n
+/// @param {struct} _locales*
+/// @param {string} _defaultLocale*
+function gmi18nSetup() {
+	var _count = argument_count;
+	
+	if (_count < 1) {
+		throw "Argument locales has required";
+	}
+	
+	if (_count < 2) {;
+		throw "Argument defaultLocale has required";
+	}
+
+	var _locales = argument[0];
+	var _defaultLocale = argument[1];
+	initGmi18n();
+	handleLocalesFile(_locales);
+	switchLocale(_defaultLocale);
+}
+
 
 function handleLocalesFile(_locales) {
 	
@@ -38,6 +51,14 @@ function handleLocalesFile(_locales) {
 	global.__locales = _file_locales;
 }
 
+function switchLocale(_locale) {
+	
+	if (!is_string(_locale)) {
+		throw "Incorrect format";
+	}
+	
+	global.__defaultLocale = _locale;
+}
 
 function getLocales() {
 
@@ -48,4 +69,21 @@ function getLocales() {
 	if (array_length(_locales) > 0) {
 		return _locales;
 	}
+	
+	return undefined;
+}
+
+function getCurrentLocale() {
+	
+	initGmi18n();
+	
+	var _locale = global.__defaultLocale;
+
+	if (is_string(_locale)) {
+		if (string_length(_locale) >= 1) {
+			return _locale;
+		}
+	}
+	
+	return undefined;
 }

@@ -1,8 +1,5 @@
 /// @description Debug mode
 
-
-
-
 if (debug_mode) {
 	// Deleted file
 	if (keyboard_check_pressed(ord("D"))) {
