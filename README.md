@@ -3,25 +3,27 @@
     <img alt="GMi18n" title="#GMi18n" src="./brand.png" />
 </h1>
 
----
-
-<h4> Internationalization of texts simply and quickly, using JSON files </h4>
+<h4 align="center">Internationalization of texts simply and quickly, using JSON files</h4>
 
 <p align="center">
-
-  [![alpha](https://img.shields.io/badge/release-v0.1.0-%2348af8f)](https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.0.0)
-
+  <a href="https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.0.0">
+    <img src="https://img.shields.io/badge/release-v0.1.0-%2348af8f" alt="Release v0.1.0">
+  </a>
   <a href="https://twitter.com/intent/follow?screen_name=CreativeHandOf">
     <img src="https://img.shields.io/twitter/follow/CreativeHandOf.svg?label=Follow%20@CreativeHandOf" alt="Follow @CreativeHandOf" />
   </a>
-
 </p>
 
 ---
 
+## Usage
 
+To use GM i18n, download [the latest release](https://github.com/CreativeHandOficial/gm-i18n/release), and import the `.yymps` package into your project.
 
-## 👨🏽‍💻 Author
+Once imported to your project, you can use any of the API functions below. Remembering that it is necessary to configure `gmi18nSetup();`
+
+---
+## Author
 
 <div align="left">
   <table>
@@ -40,7 +42,7 @@
 
 ---
 
-## 📝 License
+## License
 
 This project is under license [MIT](./LICENSE).
 

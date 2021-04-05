@@ -145,7 +145,7 @@ function handleFallBackLocaleFile() {
 	
 }
 
-/// @func	handleTranslatorFile(_fallBackLocale);
+/// @func	handleTranslatorFile();
 /// @desc	Handles reading the chosen file as the default location
 function handleTranslatorFile() {
 	
@@ -174,7 +174,7 @@ function handleTranslatorFile() {
 	global.__translator = _translator;
 }
 
-/// @func	getLocales(_fallBackLocale);
+/// @func	getLocales();
 /// @desc	Returns an array with all the locations configured during setup
 function getLocales() {
 
