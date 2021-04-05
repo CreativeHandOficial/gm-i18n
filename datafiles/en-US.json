@@ -1,0 +1,9 @@
+{
+  "welcome": "Welcome",
+  "item": {
+    "potion": {
+      "hp": "Potion HP"
+    }
+  },
+  "new_game": "New Game"
+}
