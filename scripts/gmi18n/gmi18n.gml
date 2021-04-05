@@ -1,6 +1,14 @@
+/// @author		Ramon Barbosa
+/// @github		github.com/CreativeHandOficial/gm-i18n
+/// @license	MIT - Copyright (c) 2021 Creative Hand
+/// @redme		This code was made by Creative Hand, a Brazilian game studio in order to help everyone who works with Game Maker Studio.
+/// @site		creativehand.com.br
+
 #macro FILE_LOCALE "locales.json"
 #macro DELIMITER "."
 
+/// @func	initGmi18n()
+/// @desc	This method is responsible for verifying that the global locales variable does not exist, if it is true that it creates it and the other necessary functions.
 function initGmi18n() {
 	
 	if (!variable_global_exists("__locales")) {
@@ -13,10 +21,11 @@ function initGmi18n() {
 
 }
 
-///@desc Setup Gmi18n
-/// @param {struct} _locales*
-/// @param {string} _defaultLocale*
-/// @param {string} _fallBackLocale
+/// @func	gmi18nSetup(_locales*, _defaultLocale*, _fallBackLocale)
+/// @desc	Method for configuring in18 within your project, using locations as parameters. The default location. And a return location if there is no requested structure.
+/// @param	{array}	_locales*		Required Locales configuration array, must contain code, file and lang
+/// @param	{string} _defaultLocale* Required Setting the default location
+/// @param	{string} _fallBackLocale Optional Setting the return location, if it does not exist at the current location
 function gmi18nSetup() {
 	var _count = argument_count;
 	
@@ -38,7 +47,9 @@ function gmi18nSetup() {
 	setFallBackLocale(_fallBackLocale);
 }
 
-
+/// @func	handleLocalesFile(_locales)
+/// @desc	Method for handling the creation of location configuration files
+/// @param	{array} _locales
 function handleLocalesFile(_locales) {
 	
 	if (!file_exists(FILE_LOCALE)) {
@@ -53,12 +64,16 @@ function handleLocalesFile(_locales) {
 	var _file_locales = importJson(FILE_LOCALE, json_parse);
 
 	if (!is_array(_file_locales)) {
-		throw "Incorrect" + FILE_LOCALE + "format";
+		throw "Incorrect " + FILE_LOCALE + " format";
 	}
 
 	global.__locales = _file_locales;
 }
 
+/// @func	 switchLocale(_locale)
+/// @desc	 Method responsible for making the language localization change
+/// @param	 {string} _locale* Required Location to be changed
+/// @example switchLocale("pt-BR")
 function switchLocale(_locale) {
 	
 	if (!is_string(_locale)) {
@@ -70,6 +85,9 @@ function switchLocale(_locale) {
 	handleTranslatorFile();
 }
 
+/// @func	setFallBackLocale(_fallBackLocale);
+/// @desc	Configure the return location if it was informed in the setup
+/// @param	{string|undefined} _fallBackLocale* Required 
 function setFallBackLocale(_fallBackLocale) {
 
 	if (is_undefined(_fallBackLocale)) {
@@ -84,6 +102,8 @@ function setFallBackLocale(_fallBackLocale) {
 	handleFallBackLocaleFile();
 }
 
+/// @func	handleFallBackLocaleFile()
+/// @desc	Handles reading the chosen file as the return location
 function handleFallBackLocaleFile() {
 	
 	var _locales = getLocales();
@@ -97,7 +117,7 @@ function handleFallBackLocaleFile() {
 		return;
 	}
 	
-	if (global.__fallBackLocale == global.__defaultLocale) {
+	if (_fallBackLocale == _defaultLocale) {
 		_translator = global.__translator
 	}
 	
@@ -125,6 +145,8 @@ function handleFallBackLocaleFile() {
 	
 }
 
+/// @func	handleTranslatorFile(_fallBackLocale);
+/// @desc	Handles reading the chosen file as the default location
 function handleTranslatorFile() {
 	
 	var _locales = getLocales();
@@ -152,6 +174,8 @@ function handleTranslatorFile() {
 	global.__translator = _translator;
 }
 
+/// @func	getLocales(_fallBackLocale);
+/// @desc	Returns an array with all the locations configured during setup
 function getLocales() {
 
 	initGmi18n();
@@ -165,6 +189,8 @@ function getLocales() {
 	return undefined;
 }
 
+/// @func	getCurrentLocale();
+/// @desc	Returns the current chosen location
 function getCurrentLocale() {
 	
 	initGmi18n();
@@ -180,7 +206,10 @@ function getCurrentLocale() {
 	return undefined;
 }
 
-/// @param {struct} _param
+/// @func	 useTranslation(_param)
+/// @desc	 Method responsible for returning the text within the .json file of the previously chosen location
+/// @param	 {string} _param Structure created within your .json localization file
+/// @example useTranslation("messages.welcome")
 function useTranslation(_param) {
 	
 	initGmi18n();

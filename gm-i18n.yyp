@@ -8,6 +8,7 @@
     {"id":{"name":"oSetupi18n","path":"objects/oSetupi18n/oSetupi18n.yy",},"order":0,},
     {"id":{"name":"sCheckbox","path":"sprites/sCheckbox/sCheckbox.yy",},"order":0,},
     {"id":{"name":"fntPressStart","path":"fonts/fntPressStart/fntPressStart.yy",},"order":0,},
+    {"id":{"name":"sBrand","path":"sprites/sBrand/sBrand.yy",},"order":1,},
     {"id":{"name":"oLang","path":"objects/oLang/oLang.yy",},"order":1,},
     {"id":{"name":"rMain","path":"rooms/rMain/rMain.yy",},"order":0,},
   ],
@@ -48,7 +49,6 @@
   ],
   "IncludedFiles": [
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"PT-br.json","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"locales.json","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"en-US.json","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"es-ES.json","resourceType":"GMIncludedFile",},
   ],

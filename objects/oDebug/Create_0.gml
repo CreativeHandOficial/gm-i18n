@@ -9,3 +9,9 @@ handleLang = function () {
 }
 
 handleLang();
+
+deleteLocalesFiles =  function () {
+	if (file_exists(FILE_LOCALE)) {
+		file_delete(FILE_LOCALE);
+	}
+}

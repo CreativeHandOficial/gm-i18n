@@ -36,15 +36,6 @@ function exportJson(_file_name, _data, _func) {
 	file_text_close(_file);
 }
 
-function deleteLocalesFiles() {
-	if (file_exists(FILE_LOCALE)) {
-		file_delete(FILE_LOCALE);
-		show_debug_message("//////// INFO ////////");
-		show_debug_message(string(FILE_LOCALE) + "Has deleted!")
-		show_debug_message("////////////////");
-	}
-}
-
 
 /// @function explode(_delimiter, _string)
 /// @description  Returns an array of strings parsed from a given 
