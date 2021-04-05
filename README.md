@@ -28,7 +28,7 @@
 
 ## Usage
 
-To use GM i18n, download [the latest release](https://github.com/CreativeHandOficial/gm-i18n/release), and import the `.yymps` package into your project.
+To use GM i18n, download [the latest release](https://github.com/CreativeHandOficial/gm-i18n/releases), and import the `.yymps` package into your project.
 
 Location files must be included in the GMS include file. Example of how to create a file: [en-US.json](https://github.com/CreativeHandOficial/gm-i18n/blob/master/datafiles/en-US.json)
 
