@@ -142,7 +142,7 @@ function handleFallBackLocaleFile() {
 		
 	}
 	
-    //Clear the string cache
+    // Clear the string cache
     ds_map_clear(global.__localizationStringCache);
 	  
 	global.__translatorFallBackLocale = _translator;
@@ -174,7 +174,7 @@ function handleTranslatorFile() {
 		throw "Incorrect " + _file + " format";
 	}
 	
-    //Clear the string cache
+    // Clear the string cache
     ds_map_clear(global.__localizationStringCache);
     
 	global.__translator = _translator;
@@ -226,7 +226,7 @@ function useTranslation(_param) {
 		_translatorFallBackLocale = undefined,
         _input_param = _param;
 	
-    //Check the string cache and, if we find a cached result, return it
+    // Check the string cache and, if we find a cached result, return it
     if (ds_map_exists(global.__localizationStringCache, _input_param)) {
         return global.__localizationStringCache[? _input_param];
     }
