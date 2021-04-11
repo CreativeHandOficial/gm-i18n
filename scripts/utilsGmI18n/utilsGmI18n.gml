@@ -7,14 +7,9 @@
 /// @author https://github.com/samspadegamedev
 function importJson(_file_name, _func) {
 	if (file_exists(_file_name)) {
-		var _file, _json_string;
-		_file = file_text_open_read(_file_name);
-		_json_string = "";
-		while (!file_text_eof(_file)) {
-			_json_string += file_text_read_string(_file);
-			file_text_readln(_file);
-		}
-		file_text_close(_file);
+        var _buffer = buffer_load(_file_name);
+        var _json_string = buffer_read(_buffer, buffer_string);
+        buffer_delete(_buffer);
 		return script_execute(_func, _json_string);
 	}
 	return undefined;
@@ -31,9 +26,9 @@ function importJson(_file_name, _func) {
 ///			as arrays and structs.	
 /// @author https://github.com/samspadegamedev
 function exportJson(_file_name, _data, _func) {
-	var _file = file_text_open_write(_file_name);
-	file_text_write_string(_file, script_execute(_func, _data));
-	file_text_close(_file);
+    var _buffer = buffer_create(string_byte_length(_data)+1, buffer_fixed, 1);
+    buffer_write(_buffer, buffer_string, script_execute(_func, _data));
+    buffer_save(_buffer, _file_name);
 }
 
 

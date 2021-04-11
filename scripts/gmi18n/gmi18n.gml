@@ -17,6 +17,7 @@ function initGmi18n() {
 		global.__translator = undefined;
 		global.__fallBackLocale = undefined;
 		global.__translatorFallBackLocale = undefined;
+        global.__localizationStringCache = ds_map_create();
 	}
 
 }
@@ -140,9 +141,11 @@ function handleFallBackLocaleFile() {
 		}
 		
 	}
+	
+    //Clear the string cache
+    ds_map_clear(global.__localizationStringCache);
 	  
 	global.__translatorFallBackLocale = _translator;
-	
 }
 
 /// @func	handleTranslatorFile();
@@ -171,6 +174,9 @@ function handleTranslatorFile() {
 		throw "Incorrect " + _file + " format";
 	}
 	
+    //Clear the string cache
+    ds_map_clear(global.__localizationStringCache);
+    
 	global.__translator = _translator;
 }
 
@@ -217,8 +223,14 @@ function useTranslation(_param) {
 	var _translator, 
 		_hasFallBackLocale = false,
 		_hasSearchFallBackLocale = false,
-		_translatorFallBackLocale = undefined;
+		_translatorFallBackLocale = undefined,
+        _input_param = _param;
 	
+    //Check the string cache and, if we find a cached result, return it
+    if (ds_map_exists(global.__localizationStringCache, _input_param)) {
+        return global.__localizationStringCache[? _input_param];
+    }
+    
 	if (is_undefined(global.__translator)) {
 		throw "It has not been defined";
 	}
@@ -254,7 +266,8 @@ function useTranslation(_param) {
 					i = 0;
 					continue;
 				}
-
+                
+                global.__localizationStringCache[? _input_param] = _param;
 				return _param;
 				break;
 			}
@@ -275,19 +288,25 @@ function useTranslation(_param) {
 		}
 		
 		if (is_struct(_temp_translator)) {
-			return _param
+            global.__localizationStringCache[? _input_param] = _param;
+			return _param;
 		}
 				
+        global.__localizationStringCache[? _input_param] = _temp_translator;
 		return _temp_translator;
 	}
 	
 	if (variable_struct_exists(_translator, _param)) {
-		return variable_struct_get(_translator, _param);
+		var _result = variable_struct_get(_translator, _param);
+        global.__localizationStringCache[? _input_param] = _result;
+        return _result;
 	}
 	
 	if (_hasFallBackLocale) {
 		if (variable_struct_exists(_translatorFallBackLocale, _param)) {
-			return variable_struct_get(_translatorFallBackLocale, _param);
+			var _result = variable_struct_get(_translatorFallBackLocale, _param);
+            global.__localizationStringCache[? _input_param] = _result;
+            return _result;
 		}
 	}
 	
