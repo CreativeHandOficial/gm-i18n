@@ -6,8 +6,8 @@
 <h4 align="center">Internationalization of texts simply and quickly, using JSON files</h4>
 
 <p align="center">
-  <a href="https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.0.0">
-    <img src="https://img.shields.io/badge/release-v0.1.0-%2348af8f" alt="Release v0.1.0">
+  <a href="https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.2.0">
+    <img src="https://img.shields.io/badge/release-v0.2.0-%2348af8f" alt="Release v0.2.0">
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=CreativeHandOf">
     <img src="https://img.shields.io/twitter/follow/CreativeHandOf.svg?label=Follow%20@CreativeHandOf" alt="Follow @CreativeHandOf" />
@@ -140,6 +140,28 @@ Returns an array with all the locations configured during setup
 getLocales();
 ```
 
+---
+## Contributors
+
+
+<div align="left">
+  <table>
+    <tr align="center">
+      <td align="center">
+        <a href="https://github.com/JujuAdams">
+          <img src="https://avatars.githubusercontent.com/u/3970480?v=4" width="100" />
+          <br />
+          <sub>
+            <b>Juju Adams</b>
+          </sub>
+        </a>
+        <br />
+        <a href="http://www.jujuadams.com/" title="Juju Adams">🌈</a></td>
+      </td>
+    </tr>
+  </table>
+</div>
+
 
 ---
 ## Author
@@ -150,10 +172,16 @@ getLocales();
       <td>Coded By</td>
     </tr>
     <tr align="center">
-      <td>
+        <td align="center">
         <a href="https://github.com/rbarbosa95">
           <img src="https://avatars0.githubusercontent.com/u/15218743?s=460&u=d76d008067b2ee2fe2f55db081ea78cdad461e57&v=4" width="100" />
+          <br />
+          <sub>
+            <b>Ramon Barbosa</b>
+          </sub>
         </a>
+        <br />
+        <a href="https://creativehand.com.br/" title="Creative Hand">🕹️</a></td>
       </td>
     </tr>
   </table>
