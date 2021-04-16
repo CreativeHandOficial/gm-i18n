@@ -6,7 +6,7 @@
 <h4 align="center">Internationalization of texts simply and quickly, using JSON files</h4>
 
 <p align="center">
-  <a href="https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.0.0">
+  <a href="https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.1.0">
     <img src="https://img.shields.io/badge/release-v0.1.0-%2348af8f" alt="Release v0.1.0">
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=CreativeHandOf">
