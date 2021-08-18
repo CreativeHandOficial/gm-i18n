@@ -18,6 +18,8 @@ function initGmi18n() {
 		global.__fallBackLocale = undefined;
 		global.__translatorFallBackLocale = undefined;
         global.__localizationStringCache = ds_map_create();
+		global.__languageStatics = ds_map_create();
+		global.__languageChanged = false;
 	}
 
 }
@@ -82,6 +84,7 @@ function switchLocale(_locale) {
 	}
 	
 	global.__defaultLocale = _locale;
+	global.__languageChanged = true;
 	
 	handleTranslatorFile();
 }
@@ -215,17 +218,53 @@ function getCurrentLocale() {
 /// @func	 useTranslation(_param)
 /// @desc	 Method responsible for returning the text within the .json file of the previously chosen location
 /// @param	 {string} _param Structure created within your .json localization file
+/// @param	 {string} _var_name The name of the variable that must remain static
 /// @example useTranslation("messages.welcome")
-function useTranslation(_param) {
+/// @example Static method | Event Create: name = useTranslation("messages.welcome", "name");
+function useTranslation() {
 	
 	initGmi18n();
+	
+	var _count = argument_count;
+		
+	if (_count < 1) {
+		throw "Argument locales has required";
+	}
+	
+	var _param = argument[0],
+		_var_name = _count > 1 ? argument[1] : undefined;
+	
+	// Check the variable type
+	if (!is_string(_param)) {
+		throw "Incorrect format";
+	}
+	
+	if (!is_undefined(_var_name)) {
+		
+		// Creating the basic structure
+		var _static_data = {
+			obj: undefined,
+			varName: undefined,
+			param: undefined,
+		}
+		
+		// Setting the values ​​in the structure
+		_static_data.obj = object_index;
+		_static_data.varName = _var_name;
+		_static_data.param = _param;
+		
+		// Add to static map
+	    if (!ds_map_exists(global.__languageStatics, _param)) {
+	        global.__languageStatics[? _param] = _static_data;
+	    }
+	}
 	
 	var _translator, 
 		_hasFallBackLocale = false,
 		_hasSearchFallBackLocale = false,
 		_translatorFallBackLocale = undefined,
         _input_param = _param;
-	
+
     // Check the string cache and, if we find a cached result, return it
     if (ds_map_exists(global.__localizationStringCache, _input_param)) {
         return global.__localizationStringCache[? _input_param];
@@ -241,10 +280,6 @@ function useTranslation(_param) {
 	}
 	
 	_translator = global.__translator;
-	
-	if (!is_string(_param)) {
-		throw "Incorrect format";
-	}
 	
 	var _min_length = 1;
 	var _params = explode(DELIMITER, _param);
@@ -311,4 +346,20 @@ function useTranslation(_param) {
 	}
 	
 	return _param;
+}
+
+/// @func	reloadValuesWhenExchanged()
+/// @desc	Method responsible for updating objects' create event variables
+function reloadValuesWhenExchanged() {
+	if (global.__languageChanged) {
+		var _mapKeys = ds_map_keys_to_array(global.__languageStatics);
+		for (var i = 0; i < array_length(_mapKeys); ++i) {
+			if (ds_map_exists(global.__languageStatics, _mapKeys[i])) {
+				var _value = global.__languageStatics[? _mapKeys[i]];
+				variable_instance_set(_value.obj, _value.varName, useTranslation(_value.param));
+			}
+		}
+
+		global.__languageChanged = false;
+	}
 }
