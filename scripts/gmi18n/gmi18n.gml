@@ -1,7 +1,7 @@
 /// @author		Ramon Barbosa
 /// @github		github.com/CreativeHandOficial/gm-i18n
 /// @license	MIT - Copyright (c) 2021 Creative Hand
-/// @redme		This code was made by Creative Hand, a Brazilian game studio in order to help everyone who works with Game Maker Studio.
+/// @readme		This code was made by Creative Hand, a Brazilian game studio in order to help everyone who works with Game Maker Studio.
 /// @site		creativehand.com.br
 
 #macro FILE_LOCALE "locales.json"
@@ -26,9 +26,9 @@ function initGmi18n() {
 
 /// @func	gmi18nSetup(_locales*, _defaultLocale*, _fallBackLocale)
 /// @desc	Method for configuring in18 within your project, using locations as parameters. The default location. And a return location if there is no requested structure.
-/// @param	{array}	_locales*		Required Locales configuration array, must contain code, file and lang
-/// @param	{string} _defaultLocale* Required Setting the default location
-/// @param	{string} _fallBackLocale Optional Setting the return location, if it does not exist at the current location
+/// @param	{array}	 _locales*		 | Required | Locales configuration array, must contain code, file and lang
+/// @param	{string} _defaultLocale* | Required | Setting the default location
+/// @param	{string} _fallBackLocale | Optional | Setting the return location, if it does not exist at the current location
 function gmi18nSetup() {
 	var _count = argument_count;
 	
@@ -50,7 +50,7 @@ function gmi18nSetup() {
 	setFallBackLocale(_fallBackLocale);
 }
 
-/// @func	handleLocalesFile(_locales)
+/// @func	handleLocalesFile(_locales);
 /// @desc	Method for handling the creation of location configuration files
 /// @param	{array} _locales
 function handleLocalesFile(_locales) {
@@ -73,9 +73,9 @@ function handleLocalesFile(_locales) {
 	global.__locales = _file_locales;
 }
 
-/// @func	 switchLocale(_locale)
+/// @func	 switchLocale(_locale;
 /// @desc	 Method responsible for making the language localization change
-/// @param	 {string} _locale* Required Location to be changed
+/// @param	 {string} _locale* | Required | Location to be changed
 /// @example switchLocale("pt-BR")
 function switchLocale(_locale) {
 	
@@ -91,7 +91,7 @@ function switchLocale(_locale) {
 
 /// @func	setFallBackLocale(_fallBackLocale);
 /// @desc	Configure the return location if it was informed in the setup
-/// @param	{string|undefined} _fallBackLocale* Required 
+/// @param	{string|undefined} _fallBackLocale* | Required |
 function setFallBackLocale(_fallBackLocale) {
 
 	if (is_undefined(_fallBackLocale)) {
@@ -215,10 +215,10 @@ function getCurrentLocale() {
 	return undefined;
 }
 
-/// @func	 useTranslation(_param)
+/// @func	 useTranslation(_param);
 /// @desc	 Method responsible for returning the text within the .json file of the previously chosen location
-/// @param	 {string} _param Structure created within your .json localization file
-/// @param	 {string} _var_name The name of the variable that must remain static
+/// @param	 {string} _param*  | Required | Structure created within your .json localization file
+/// @param	 {string} _varName | Optional | The name of the variable that must remain static
 /// @example useTranslation("messages.welcome")
 /// @example Static method | Event Create: name = useTranslation("messages.welcome", "name");
 function useTranslation() {
@@ -232,14 +232,14 @@ function useTranslation() {
 	}
 	
 	var _param = argument[0],
-		_var_name = _count > 1 ? argument[1] : undefined;
+		_varName = _count > 1 ? argument[1] : undefined;
 	
 	// Check the variable type
 	if (!is_string(_param)) {
 		throw "Incorrect format";
 	}
 	
-	if (!is_undefined(_var_name)) {
+	if (!is_undefined(_varName)) {
 		
 		// Creating the basic structure
 		var _static_data = {
@@ -250,7 +250,7 @@ function useTranslation() {
 		
 		// Setting the values ​​in the structure
 		_static_data.obj = object_index;
-		_static_data.varName = _var_name;
+		_static_data.varName = _varName;
 		_static_data.param = _param;
 		
 		// Add to static map
@@ -348,7 +348,7 @@ function useTranslation() {
 	return _param;
 }
 
-/// @func	reloadValuesWhenExchanged()
+/// @func	reloadValuesWhenExchanged();
 /// @desc	Method responsible for updating objects' create event variables
 function reloadValuesWhenExchanged() {
 	if (global.__languageChanged) {
