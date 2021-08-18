@@ -6,8 +6,8 @@
 <h4 align="center">Internationalization of texts simply and quickly, using JSON files</h4>
 
 <p align="center">
-  <a href="https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.2.0">
-    <img src="https://img.shields.io/badge/release-v0.2.0-%2348af8f" alt="Release v0.2.0">
+  <a href="https://github.com/CreativeHandOficial/gm-i18n/releases/tag/v0.3.0">
+    <img src="https://img.shields.io/badge/release-v0.3.0-%2348af8f" alt="Release v0.3.0">
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=CreativeHandOf">
     <img src="https://img.shields.io/twitter/follow/CreativeHandOf.svg?label=Follow%20@CreativeHandOf" alt="Follow @CreativeHandOf" />
@@ -42,6 +42,8 @@ Once imported to your project, you can use any of the API functions below. Remem
 
 This function is responsible for configuring the creation of the locations configuration file, defining what will be the default location and configuring the return location.
 
+> I recommend using the object `oSetupi18n` to speed up initial setup
+
 ```
 @desc Method for configuring in18 within your project, using locations as parameters. The default location. And a return location if there is no requested structure.
 @param	{array}  _locales*		    Required Locales configuration array, must contain code, file and lang
@@ -64,18 +66,25 @@ gmi18nSetup(locales, defaultLocale, fallBackLocale);
 ```
 
 
-### `useTranslation(_param)`
+### `useTranslation(_param, _varName)`
 
 This function is responsible for returning the text that was configured in the json file of the chosen location
 
 ```
-@desc Method responsible for returning the text within the .json file of the previously chosen location
-@param	 {string} _param Structure created within your .json localization file
+@desc    Method responsible for returning the text within the .json file of the previously chosen location
+@param	 {string} _param*  | Required | Structure created within your .json localization file
+@param	 {string} _varName | Optional | The name of the variable that must remain static
 @returns {string} Returns the text chosen in the parameter
 @example
 
 // Search for the welcome text according to the chosen location
 draw_text(x, y, useTranslation('welcome'));
+
+-----------------------------------------------------------------
+
+// Using the function within Create Event, this way it will be possible to update the variable value whenever there is a language change
+
+name = useTranslation('welcome', 'name');
 ```
 
 > Recommendation
@@ -90,6 +99,17 @@ t = method(self, useTranslation);
 
 // Draw
 draw_text(x, y, t('welcome'));
+```
+
+
+### `reloadValuesWhenExchanged()`
+
+Method responsible for updating objects' create event variables
+
+```
+// Begin Step
+
+reloadValuesWhenExchanged();
 ```
 
 

@@ -1,7 +1,7 @@
 /// @author		Ramon Barbosa
 /// @github		github.com/CreativeHandOficial/gm-i18n
 /// @license	MIT - Copyright (c) 2021 Creative Hand
-/// @redme		This code was made by Creative Hand, a Brazilian game studio in order to help everyone who works with Game Maker Studio.
+/// @readme		This code was made by Creative Hand, a Brazilian game studio in order to help everyone who works with Game Maker Studio.
 /// @site		creativehand.com.br
 
 #macro FILE_LOCALE "locales.json"
@@ -18,15 +18,17 @@ function initGmi18n() {
 		global.__fallBackLocale = undefined;
 		global.__translatorFallBackLocale = undefined;
         global.__localizationStringCache = ds_map_create();
+		global.__languageStatics = ds_map_create();
+		global.__languageChanged = false;
 	}
 
 }
 
 /// @func	gmi18nSetup(_locales*, _defaultLocale*, _fallBackLocale)
 /// @desc	Method for configuring in18 within your project, using locations as parameters. The default location. And a return location if there is no requested structure.
-/// @param	{array}	_locales*		Required Locales configuration array, must contain code, file and lang
-/// @param	{string} _defaultLocale* Required Setting the default location
-/// @param	{string} _fallBackLocale Optional Setting the return location, if it does not exist at the current location
+/// @param	{array}	 _locales*		 | Required | Locales configuration array, must contain code, file and lang
+/// @param	{string} _defaultLocale* | Required | Setting the default location
+/// @param	{string} _fallBackLocale | Optional | Setting the return location, if it does not exist at the current location
 function gmi18nSetup() {
 	var _count = argument_count;
 	
@@ -48,7 +50,7 @@ function gmi18nSetup() {
 	setFallBackLocale(_fallBackLocale);
 }
 
-/// @func	handleLocalesFile(_locales)
+/// @func	handleLocalesFile(_locales);
 /// @desc	Method for handling the creation of location configuration files
 /// @param	{array} _locales
 function handleLocalesFile(_locales) {
@@ -71,9 +73,9 @@ function handleLocalesFile(_locales) {
 	global.__locales = _file_locales;
 }
 
-/// @func	 switchLocale(_locale)
+/// @func	 switchLocale(_locale;
 /// @desc	 Method responsible for making the language localization change
-/// @param	 {string} _locale* Required Location to be changed
+/// @param	 {string} _locale* | Required | Location to be changed
 /// @example switchLocale("pt-BR")
 function switchLocale(_locale) {
 	
@@ -82,13 +84,14 @@ function switchLocale(_locale) {
 	}
 	
 	global.__defaultLocale = _locale;
+	global.__languageChanged = true;
 	
 	handleTranslatorFile();
 }
 
 /// @func	setFallBackLocale(_fallBackLocale);
 /// @desc	Configure the return location if it was informed in the setup
-/// @param	{string|undefined} _fallBackLocale* Required 
+/// @param	{string|undefined} _fallBackLocale* | Required |
 function setFallBackLocale(_fallBackLocale) {
 
 	if (is_undefined(_fallBackLocale)) {
@@ -212,20 +215,56 @@ function getCurrentLocale() {
 	return undefined;
 }
 
-/// @func	 useTranslation(_param)
+/// @func	 useTranslation(_param);
 /// @desc	 Method responsible for returning the text within the .json file of the previously chosen location
-/// @param	 {string} _param Structure created within your .json localization file
+/// @param	 {string} _param*  | Required | Structure created within your .json localization file
+/// @param	 {string} _varName | Optional | The name of the variable that must remain static
 /// @example useTranslation("messages.welcome")
-function useTranslation(_param) {
+/// @example Static method | Event Create: name = useTranslation("messages.welcome", "name");
+function useTranslation() {
 	
 	initGmi18n();
+	
+	var _count = argument_count;
+		
+	if (_count < 1) {
+		throw "Argument locales has required";
+	}
+	
+	var _param = argument[0],
+		_varName = _count > 1 ? argument[1] : undefined;
+	
+	// Check the variable type
+	if (!is_string(_param)) {
+		throw "Incorrect format";
+	}
+	
+	if (!is_undefined(_varName)) {
+		
+		// Creating the basic structure
+		var _static_data = {
+			obj: undefined,
+			varName: undefined,
+			param: undefined,
+		}
+		
+		// Setting the values ​​in the structure
+		_static_data.obj = object_index;
+		_static_data.varName = _varName;
+		_static_data.param = _param;
+		
+		// Add to static map
+	    if (!ds_map_exists(global.__languageStatics, _param)) {
+	        global.__languageStatics[? _param] = _static_data;
+	    }
+	}
 	
 	var _translator, 
 		_hasFallBackLocale = false,
 		_hasSearchFallBackLocale = false,
 		_translatorFallBackLocale = undefined,
         _input_param = _param;
-	
+
     // Check the string cache and, if we find a cached result, return it
     if (ds_map_exists(global.__localizationStringCache, _input_param)) {
         return global.__localizationStringCache[? _input_param];
@@ -241,10 +280,6 @@ function useTranslation(_param) {
 	}
 	
 	_translator = global.__translator;
-	
-	if (!is_string(_param)) {
-		throw "Incorrect format";
-	}
 	
 	var _min_length = 1;
 	var _params = explode(DELIMITER, _param);
@@ -311,4 +346,20 @@ function useTranslation(_param) {
 	}
 	
 	return _param;
+}
+
+/// @func	reloadValuesWhenExchanged();
+/// @desc	Method responsible for updating objects' create event variables
+function reloadValuesWhenExchanged() {
+	if (global.__languageChanged) {
+		var _mapKeys = ds_map_keys_to_array(global.__languageStatics);
+		for (var i = 0; i < array_length(_mapKeys); ++i) {
+			if (ds_map_exists(global.__languageStatics, _mapKeys[i])) {
+				var _value = global.__languageStatics[? _mapKeys[i]];
+				variable_instance_set(_value.obj, _value.varName, useTranslation(_value.param));
+			}
+		}
+
+		global.__languageChanged = false;
+	}
 }
