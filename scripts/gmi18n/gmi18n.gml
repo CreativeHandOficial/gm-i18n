@@ -146,7 +146,7 @@ function handleFallBackLocaleFile() {
 	}
 	
     // Clear the string cache
-    ds_map_clear(global.__localizationStringCache);
+    if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
 	  
 	global.__translatorFallBackLocale = _translator;
 }
@@ -178,7 +178,7 @@ function handleTranslatorFile() {
 	}
 	
     // Clear the string cache
-    ds_map_clear(global.__localizationStringCache);
+    if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
     
 	global.__translator = _translator;
 }
@@ -254,9 +254,9 @@ function useTranslation() {
 		_static_data.param = _param;
 		
 		// Add to static map
-	    if (!ds_map_exists(global.__languageStatics, _param)) {
-	        global.__languageStatics[? _param] = _static_data;
-	    }
+		if (ds_exists(global.__languageStatics, ds_type_map) && !ds_map_exists(global.__languageStatics, _param)) {
+		    global.__languageStatics[? _param] = _static_data;
+		}
 	}
 	
 	var _translator, 
@@ -266,7 +266,7 @@ function useTranslation() {
         _input_param = _param;
 
     // Check the string cache and, if we find a cached result, return it
-    if (ds_map_exists(global.__localizationStringCache, _input_param)) {
+    if (ds_exists(global.__languageStatics, ds_type_map) && ds_map_exists(global.__localizationStringCache, _input_param)) {
         return global.__localizationStringCache[? _input_param];
     }
     
@@ -333,7 +333,7 @@ function useTranslation() {
 	
 	if (variable_struct_exists(_translator, _param)) {
 		var _result = variable_struct_get(_translator, _param);
-        global.__localizationStringCache[? _input_param] = _result;
+        if (ds_exists(global.__localizationStringCache, ds_type_map)) global.__localizationStringCache[? _input_param] = _result;
         return _result;
 	}
 	
@@ -352,7 +352,7 @@ function useTranslation() {
 /// @desc	Method responsible for updating objects' create event variables
 function reloadValuesWhenExchanged() {
 	if (global.__languageChanged) {
-		var _mapKeys = ds_map_keys_to_array(global.__languageStatics);
+		var _mapKeys = ds_exists(global.__languageStatics, ds_type_map) ? ds_map_keys_to_array(global.__languageStatics) : [];
 		for (var i = 0; i < array_length(_mapKeys); ++i) {
 			if (ds_map_exists(global.__languageStatics, _mapKeys[i])) {
 				var _value = global.__languageStatics[? _mapKeys[i]];
