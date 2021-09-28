@@ -11,7 +11,7 @@
 /// @desc	This method is responsible for verifying that the global locales variable does not exist, if it is true that it creates it and the other necessary functions.
 function initGmi18n() {
 	
-	if (!variable_global_exists("__locales")) {
+	if (!variable_global_exists("__locales") || !ds_exists(global.__languageStatics, ds_type_map)) {
 		global.__locales = [];
 		global.__defaultLocale = undefined;
 		global.__translator = undefined;

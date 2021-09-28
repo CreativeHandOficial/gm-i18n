@@ -7,3 +7,5 @@ if (ds_exists(global.__languageStatics, ds_type_map)) ds_map_destroy(global.__la
 // Struct
 delete global.__translator;
 delete global.__translatorFallBackLocale;
+
+show_debug_message("HERE");
