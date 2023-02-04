@@ -6,6 +6,7 @@
 
 #macro FILE_LOCALE "locales.json"
 #macro DELIMITER "."
+#macro FILE_PATH "GMi18n/"
 
 /// @func	initGmi18n()
 /// @desc	This method is responsible for verifying that the global locales variable does not exist, if it is true that it creates it and the other necessary functions.
@@ -54,23 +55,25 @@ function gmi18nSetup() {
 /// @desc	Method for handling the creation of location configuration files
 /// @param	{array} _locales
 function handleLocalesFile(_locales) {
+
+  var _path_file = FILE_PATH + FILE_LOCALE;
 	
-	if (!file_exists(FILE_LOCALE)) {
+	if (!file_exists(_path_file)) {
 		
 		if (!is_array(_locales)) {
 			throw "Incorrect format";
 		}
 		
-		exportJson(FILE_LOCALE, _locales, json_stringify);
+		gmi18n_exportJson(_path_file, _locales, json_stringify);
 	} 
 	
-	var _file_locales = importJson(FILE_LOCALE, json_parse);
+	var _file_locales = gmi18n_importJson(_path_file, json_parse);
 
-	if (!is_array(_file_locales)) {
-		throw "Incorrect " + FILE_LOCALE + " format";
-	}
+  if (!is_array(_file_locales)) {
+    throw "Incorrect " + _path_file + " format";
+  }
 
-	global.__locales = _file_locales;
+  global.__locales = _file_locales;
 }
 
 /// @func	 switchLocale(_locale;
@@ -109,22 +112,22 @@ function setFallBackLocale(_fallBackLocale) {
 /// @func	handleFallBackLocaleFile()
 /// @desc	Handles reading the chosen file as the return location
 function handleFallBackLocaleFile() {
-	
-	var _locales = getLocales();
-	var _length  = array_length(_locales);
-	var _file = undefined;
-	var _translator = undefined;
-	var _fallBackLocale = global.__fallBackLocale;
-	var _defaultLocale = global.__defaultLocale;
-	
-	if (is_undefined(_fallBackLocale)) {
-		return;
-	}
-	
-	if (_fallBackLocale == _defaultLocale) {
-		_translator = global.__translator
-	}
-	
+
+  var _locales = getLocales();
+  var _length  = array_length(_locales);
+  var _file = undefined;
+  var _translator = undefined;
+  var _fallBackLocale = global.__fallBackLocale;
+  var _defaultLocale = global.__defaultLocale;
+
+  if (is_undefined(_fallBackLocale)) {
+    return;
+  }
+
+  if (_fallBackLocale == _defaultLocale) {
+    _translator = global.__translator
+  }
+
 	if (_fallBackLocale != _defaultLocale) {
 		for (var i = 0; i < _length; ++i) {
 		    if (_locales[i] == _fallBackLocale) {
@@ -137,7 +140,7 @@ function handleFallBackLocaleFile() {
 			throw _file + " does not exist";
 		}
 	
-		_translator = importJson(_file, json_parse);
+		_translator = gmi18n_importJson(_file, json_parse);
 	
 		if (!is_struct(_translator)) {
 			throw "Incorrect " + _file + " format";
@@ -154,7 +157,7 @@ function handleFallBackLocaleFile() {
 /// @func	handleTranslatorFile();
 /// @desc	Handles reading the chosen file as the default location
 function handleTranslatorFile() {
-	
+
 	var _locales = getLocales();
 	var _length  = array_length(_locales);
 	var _file = undefined;
@@ -166,21 +169,23 @@ function handleTranslatorFile() {
 			break;
 		}
 	}
+  
+  var _path_file = FILE_PATH + _file;
 
-	if (!file_exists(_file)) {
-		throw _file + " does not exist";
-	}
-	
-	var _translator = importJson(_file, json_parse);
-	
-	if (!is_struct(_translator)) {
-		throw "Incorrect " + _file + " format";
-	}
-	
-    // Clear the string cache
-    if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
-    
-	global.__translator = _translator;
+  if (!file_exists(_path_file)) {
+    throw _path_file + " does not exist";
+  }
+
+  var _translator = gmi18n_importJson(_path_file, json_parse);
+
+  if (!is_struct(_translator)) {
+    throw "Incorrect " + _path_file + " format";
+  }
+
+  // Clear the string cache
+  if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
+
+  global.__translator = _translator;
 }
 
 /// @func	getLocales();
@@ -201,18 +206,18 @@ function getLocales() {
 /// @func	getCurrentLocale();
 /// @desc	Returns the current chosen location
 function getCurrentLocale() {
-	
-	initGmi18n();
-	
-	var _locale = global.__defaultLocale;
 
-	if (is_string(_locale)) {
-		if (string_length(_locale) >= 1) {
-			return _locale;
-		}
-	}
-	
-	return undefined;
+  initGmi18n();
+
+  var _locale = global.__defaultLocale;
+
+  if (is_string(_locale)) {
+    if (string_length(_locale) >= 1) {
+      return _locale;
+    }
+  }
+
+  return undefined;
 }
 
 /// @func	 useTranslation(_param);
@@ -282,7 +287,7 @@ function useTranslation() {
 	_translator = global.__translator;
 	
 	var _min_length = 1;
-	var _params = explode(DELIMITER, _param);
+	var _params = gmi18n_explode(DELIMITER, _param);
 	var _length = array_length(_params);
 	
 	
