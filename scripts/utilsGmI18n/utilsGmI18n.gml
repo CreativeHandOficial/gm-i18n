@@ -3,9 +3,9 @@
 /// @param {func}	_func			the function to use on the string
 function gmi18n_importJson(_file_name, _func) {
 	if (file_exists(_file_name)) {
-        var _buffer = buffer_load(_file_name);
-        var _json_string = buffer_read(_buffer, buffer_string);
-        buffer_delete(_buffer);
+    var _buffer = buffer_load(_file_name);
+    var _json_string = buffer_read(_buffer, buffer_string);
+    buffer_delete(_buffer);
 		return script_execute(_func, _json_string);
 	}
 	return undefined;

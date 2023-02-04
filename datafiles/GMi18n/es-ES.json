@@ -1,5 +1,5 @@
 {
-  "welcome": "Bienvenido {0}",
+  "welcome": "Bienvenido {0} {1}",
   "item": {
     "potion": {
       "hp": "Pocion",

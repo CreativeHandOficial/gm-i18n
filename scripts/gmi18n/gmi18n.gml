@@ -307,8 +307,8 @@ function useTranslation() {
 					i = 0;
 					continue;
 				}
-                
-                global.__localizationStringCache[? _input_param] = _param;
+
+        global.__localizationStringCache[? _input_param] = _param;
 				return _param;
 				break;
 			}
@@ -329,18 +329,18 @@ function useTranslation() {
 		}
 		
 		if (is_struct(_temp_translator)) {
-            global.__localizationStringCache[? _input_param] = _param;
+      global.__localizationStringCache[? _input_param] = _param;
 			return _param;
 		}
-				
+
     global.__localizationStringCache[? _input_param] = _temp_translator;
 		return _temp_translator;
 	}
-	
-	if (variable_struct_exists(_translator, _param)) {
-		var _result = variable_struct_get(_translator, _param);
-        if (ds_exists(global.__localizationStringCache, ds_type_map)) global.__localizationStringCache[? _input_param] = _result;
-        return _result;
+
+  if (variable_struct_exists(_translator, _param)) {
+    var _result = variable_struct_get(_translator, _param);
+    if (ds_exists(global.__localizationStringCache, ds_type_map)) global.__localizationStringCache[? _input_param] = _result;
+    return _result;
 	}
 	
   if (_hasFallBackLocale) {

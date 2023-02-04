@@ -20,7 +20,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Scripts","folderPath":"folders/GMi18n/Scripts.yy","order":0,},
   ],
   "IncludedFiles": [
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"PT-br.json","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"en-US.json","CopyToMask":-1,"filePath":"datafiles/GMi18n",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"es-ES.json","CopyToMask":-1,"filePath":"datafiles/GMi18n",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"pt-BR.json","CopyToMask":-1,"filePath":"datafiles/GMi18n",},
