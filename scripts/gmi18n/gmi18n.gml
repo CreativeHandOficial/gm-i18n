@@ -147,11 +147,11 @@ function handleFallBackLocaleFile() {
 		}
 		
 	}
-	
-    // Clear the string cache
-    if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
-	  
-	global.__translatorFallBackLocale = _translator;
+
+  // Clear the string cache
+  if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
+  
+  global.__translatorFallBackLocale = _translator;
 }
 
 /// @func	handleTranslatorFile();
@@ -227,58 +227,59 @@ function getCurrentLocale() {
 /// @example useTranslation("messages.welcome")
 /// @example Static method | Event Create: name = useTranslation("messages.welcome", "name");
 function useTranslation() {
-	
-	initGmi18n();
-	
-	var _count = argument_count;
-		
-	if (_count < 1) {
-		throw "Argument locales has required";
-	}
-	
-	var _param = argument[0],
-		_varName = _count > 1 ? argument[1] : undefined;
-	
-	// Check the variable type
-	if (!is_string(_param)) {
-		throw "Incorrect format";
-	}
-	
-	if (!is_undefined(_varName)) {
-		
-		// Creating the basic structure
-		var _static_data = {
-			obj: undefined,
-			varName: undefined,
-			param: undefined,
-		}
-		
-		// Setting the values ​​in the structure
-		_static_data.obj = object_index;
-		_static_data.varName = _varName;
-		_static_data.param = _param;
-		
-		// Add to static map
-		if (ds_exists(global.__languageStatics, ds_type_map) && !ds_map_exists(global.__languageStatics, _param)) {
-		    global.__languageStatics[? _param] = _static_data;
-		}
-	}
-	
-	var _translator, 
-		_hasFallBackLocale = false,
-		_hasSearchFallBackLocale = false,
-		_translatorFallBackLocale = undefined,
-        _input_param = _param;
 
-    // Check the string cache and, if we find a cached result, return it
-    if (ds_exists(global.__languageStatics, ds_type_map) && ds_map_exists(global.__localizationStringCache, _input_param)) {
-        return global.__localizationStringCache[? _input_param];
+  initGmi18n();
+
+  var _count = argument_count;
+
+  if (_count < 1) {
+    throw "Argument locales has required";
+  }
+
+  var _param = argument[0],
+  _varName = _count > 1 ? argument[1] : undefined;
+
+  // Check the variable type
+  if (!is_string(_param)) {
+    throw "Incorrect format";
+  }
+
+  // Checks to see if variable was referenced
+  if (!is_undefined(_varName)) {
+
+    // Creating the basic structure
+    var _static_data = {
+      obj: undefined,
+      varName: undefined,
+      param: undefined,
     }
-    
-	if (is_undefined(global.__translator)) {
-		throw "It has not been defined";
-	}
-	
+
+    // Setting the values in the structure
+    _static_data.obj = object_index;
+    _static_data.varName = _varName;
+    _static_data.param = _param;
+
+    // Add to static map
+    if (ds_exists(global.__languageStatics, ds_type_map) && !ds_map_exists(global.__languageStatics, _param)) {
+      global.__languageStatics[? _param] = _static_data;
+    }
+  }
+
+  var _translator, 
+  _hasFallBackLocale = false,
+  _hasSearchFallBackLocale = false,
+  _translatorFallBackLocale = undefined,
+  _input_param = _param;
+
+  // Check the string cache and, if we find a cached result, return it
+  if (ds_exists(global.__languageStatics, ds_type_map) && ds_map_exists(global.__localizationStringCache, _input_param)) {
+      return global.__localizationStringCache[? _input_param];
+  }
+
+  if (is_undefined(global.__translator)) {
+  	throw "It has not been defined";
+  }
+
 	if (!is_undefined(global.__translatorFallBackLocale)) {
 		_hasFallBackLocale = true;
 		_translatorFallBackLocale = global.__translatorFallBackLocale;
@@ -332,7 +333,7 @@ function useTranslation() {
 			return _param;
 		}
 				
-        global.__localizationStringCache[? _input_param] = _temp_translator;
+    global.__localizationStringCache[? _input_param] = _temp_translator;
 		return _temp_translator;
 	}
 	
@@ -342,15 +343,15 @@ function useTranslation() {
         return _result;
 	}
 	
-	if (_hasFallBackLocale) {
-		if (variable_struct_exists(_translatorFallBackLocale, _param)) {
-			var _result = variable_struct_get(_translatorFallBackLocale, _param);
-            global.__localizationStringCache[? _input_param] = _result;
-            return _result;
-		}
-	}
-	
-	return _param;
+  if (_hasFallBackLocale) {
+    if (variable_struct_exists(_translatorFallBackLocale, _param)) {
+      var _result = variable_struct_get(_translatorFallBackLocale, _param);
+      global.__localizationStringCache[? _input_param] = _result;
+      return _result;
+    }
+  }
+
+  return _param;
 }
 
 /// @func	reloadValuesWhenExchanged();
