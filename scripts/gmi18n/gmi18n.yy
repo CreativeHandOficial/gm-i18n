@@ -1,12 +1,11 @@
 {
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "gmi18n",
-    "path": "folders/Scripts/gmi18n.yy",
-  },
+  "resourceType": "GMScript",
   "resourceVersion": "1.0",
   "name": "gmi18n",
-  "tags": [],
-  "resourceType": "GMScript",
+  "isCompatibility": false,
+  "isDnD": false,
+  "parent": {
+    "name": "Scripts",
+    "path": "folders/GMi18n/Scripts.yy",
+  },
 }

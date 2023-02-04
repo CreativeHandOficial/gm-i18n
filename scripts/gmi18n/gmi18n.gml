@@ -6,6 +6,7 @@
 
 #macro FILE_LOCALE "locales.json"
 #macro DELIMITER "."
+#macro FILE_PATH "GMi18n/"
 
 /// @func	initGmi18n()
 /// @desc	This method is responsible for verifying that the global locales variable does not exist, if it is true that it creates it and the other necessary functions.
@@ -54,23 +55,25 @@ function gmi18nSetup() {
 /// @desc	Method for handling the creation of location configuration files
 /// @param	{array} _locales
 function handleLocalesFile(_locales) {
+
+  var _path_file = FILE_PATH + FILE_LOCALE;
 	
-	if (!file_exists(FILE_LOCALE)) {
+	if (!file_exists(_path_file)) {
 		
 		if (!is_array(_locales)) {
 			throw "Incorrect format";
 		}
 		
-		exportJson(FILE_LOCALE, _locales, json_stringify);
+		gmi18n_exportJson(_path_file, _locales, json_stringify);
 	} 
 	
-	var _file_locales = importJson(FILE_LOCALE, json_parse);
+	var _file_locales = gmi18n_importJson(_path_file, json_parse);
 
-	if (!is_array(_file_locales)) {
-		throw "Incorrect " + FILE_LOCALE + " format";
-	}
+  if (!is_array(_file_locales)) {
+    throw "Incorrect " + _path_file + " format";
+  }
 
-	global.__locales = _file_locales;
+  global.__locales = _file_locales;
 }
 
 /// @func	 switchLocale(_locale;
@@ -109,22 +112,22 @@ function setFallBackLocale(_fallBackLocale) {
 /// @func	handleFallBackLocaleFile()
 /// @desc	Handles reading the chosen file as the return location
 function handleFallBackLocaleFile() {
-	
-	var _locales = getLocales();
-	var _length  = array_length(_locales);
-	var _file = undefined;
-	var _translator = undefined;
-	var _fallBackLocale = global.__fallBackLocale;
-	var _defaultLocale = global.__defaultLocale;
-	
-	if (is_undefined(_fallBackLocale)) {
-		return;
-	}
-	
-	if (_fallBackLocale == _defaultLocale) {
-		_translator = global.__translator
-	}
-	
+
+  var _locales = getLocales();
+  var _length  = array_length(_locales);
+  var _file = undefined;
+  var _translator = undefined;
+  var _fallBackLocale = global.__fallBackLocale;
+  var _defaultLocale = global.__defaultLocale;
+
+  if (is_undefined(_fallBackLocale)) {
+    return;
+  }
+
+  if (_fallBackLocale == _defaultLocale) {
+    _translator = global.__translator
+  }
+
 	if (_fallBackLocale != _defaultLocale) {
 		for (var i = 0; i < _length; ++i) {
 		    if (_locales[i] == _fallBackLocale) {
@@ -137,24 +140,24 @@ function handleFallBackLocaleFile() {
 			throw _file + " does not exist";
 		}
 	
-		_translator = importJson(_file, json_parse);
+		_translator = gmi18n_importJson(_file, json_parse);
 	
 		if (!is_struct(_translator)) {
 			throw "Incorrect " + _file + " format";
 		}
 		
 	}
-	
-    // Clear the string cache
-    if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
-	  
-	global.__translatorFallBackLocale = _translator;
+
+  // Clear the string cache
+  if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
+  
+  global.__translatorFallBackLocale = _translator;
 }
 
 /// @func	handleTranslatorFile();
 /// @desc	Handles reading the chosen file as the default location
 function handleTranslatorFile() {
-	
+
 	var _locales = getLocales();
 	var _length  = array_length(_locales);
 	var _file = undefined;
@@ -166,21 +169,23 @@ function handleTranslatorFile() {
 			break;
 		}
 	}
+  
+  var _path_file = FILE_PATH + _file;
 
-	if (!file_exists(_file)) {
-		throw _file + " does not exist";
-	}
-	
-	var _translator = importJson(_file, json_parse);
-	
-	if (!is_struct(_translator)) {
-		throw "Incorrect " + _file + " format";
-	}
-	
-    // Clear the string cache
-    if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
-    
-	global.__translator = _translator;
+  if (!file_exists(_path_file)) {
+    throw _path_file + " does not exist";
+  }
+
+  var _translator = gmi18n_importJson(_path_file, json_parse);
+
+  if (!is_struct(_translator)) {
+    throw "Incorrect " + _path_file + " format";
+  }
+
+  // Clear the string cache
+  if (ds_exists(global.__localizationStringCache, ds_type_map)) ds_map_clear(global.__localizationStringCache);
+
+  global.__translator = _translator;
 }
 
 /// @func	getLocales();
@@ -201,18 +206,18 @@ function getLocales() {
 /// @func	getCurrentLocale();
 /// @desc	Returns the current chosen location
 function getCurrentLocale() {
-	
-	initGmi18n();
-	
-	var _locale = global.__defaultLocale;
 
-	if (is_string(_locale)) {
-		if (string_length(_locale) >= 1) {
-			return _locale;
-		}
-	}
-	
-	return undefined;
+  initGmi18n();
+
+  var _locale = global.__defaultLocale;
+
+  if (is_string(_locale)) {
+    if (string_length(_locale) >= 1) {
+      return _locale;
+    }
+  }
+
+  return undefined;
 }
 
 /// @func	 useTranslation(_param);
@@ -222,58 +227,59 @@ function getCurrentLocale() {
 /// @example useTranslation("messages.welcome")
 /// @example Static method | Event Create: name = useTranslation("messages.welcome", "name");
 function useTranslation() {
-	
-	initGmi18n();
-	
-	var _count = argument_count;
-		
-	if (_count < 1) {
-		throw "Argument locales has required";
-	}
-	
-	var _param = argument[0],
-		_varName = _count > 1 ? argument[1] : undefined;
-	
-	// Check the variable type
-	if (!is_string(_param)) {
-		throw "Incorrect format";
-	}
-	
-	if (!is_undefined(_varName)) {
-		
-		// Creating the basic structure
-		var _static_data = {
-			obj: undefined,
-			varName: undefined,
-			param: undefined,
-		}
-		
-		// Setting the values ​​in the structure
-		_static_data.obj = object_index;
-		_static_data.varName = _varName;
-		_static_data.param = _param;
-		
-		// Add to static map
-		if (ds_exists(global.__languageStatics, ds_type_map) && !ds_map_exists(global.__languageStatics, _param)) {
-		    global.__languageStatics[? _param] = _static_data;
-		}
-	}
-	
-	var _translator, 
-		_hasFallBackLocale = false,
-		_hasSearchFallBackLocale = false,
-		_translatorFallBackLocale = undefined,
-        _input_param = _param;
 
-    // Check the string cache and, if we find a cached result, return it
-    if (ds_exists(global.__languageStatics, ds_type_map) && ds_map_exists(global.__localizationStringCache, _input_param)) {
-        return global.__localizationStringCache[? _input_param];
+  initGmi18n();
+
+  var _count = argument_count;
+
+  if (_count < 1) {
+    throw "Argument locales has required";
+  }
+
+  var _param = argument[0],
+  _varName = _count > 1 ? argument[1] : undefined;
+
+  // Check the variable type
+  if (!is_string(_param)) {
+    throw "Incorrect format";
+  }
+
+  // Checks to see if variable was referenced
+  if (!is_undefined(_varName)) {
+
+    // Creating the basic structure
+    var _static_data = {
+      obj: undefined,
+      varName: undefined,
+      param: undefined,
     }
-    
-	if (is_undefined(global.__translator)) {
-		throw "It has not been defined";
-	}
-	
+
+    // Setting the values in the structure
+    _static_data.obj = object_index;
+    _static_data.varName = _varName;
+    _static_data.param = _param;
+
+    // Add to static map
+    if (ds_exists(global.__languageStatics, ds_type_map) && !ds_map_exists(global.__languageStatics, _param)) {
+      global.__languageStatics[? _param] = _static_data;
+    }
+  }
+
+  var _translator, 
+  _hasFallBackLocale = false,
+  _hasSearchFallBackLocale = false,
+  _translatorFallBackLocale = undefined,
+  _input_param = _param;
+
+  // Check the string cache and, if we find a cached result, return it
+  if (ds_exists(global.__languageStatics, ds_type_map) && ds_map_exists(global.__localizationStringCache, _input_param)) {
+      return global.__localizationStringCache[? _input_param];
+  }
+
+  if (is_undefined(global.__translator)) {
+  	throw "It has not been defined";
+  }
+
 	if (!is_undefined(global.__translatorFallBackLocale)) {
 		_hasFallBackLocale = true;
 		_translatorFallBackLocale = global.__translatorFallBackLocale;
@@ -282,7 +288,7 @@ function useTranslation() {
 	_translator = global.__translator;
 	
 	var _min_length = 1;
-	var _params = explode(DELIMITER, _param);
+	var _params = gmi18n_explode(DELIMITER, _param);
 	var _length = array_length(_params);
 	
 	
@@ -301,8 +307,8 @@ function useTranslation() {
 					i = 0;
 					continue;
 				}
-                
-                global.__localizationStringCache[? _input_param] = _param;
+
+        global.__localizationStringCache[? _input_param] = _param;
 				return _param;
 				break;
 			}
@@ -323,29 +329,29 @@ function useTranslation() {
 		}
 		
 		if (is_struct(_temp_translator)) {
-            global.__localizationStringCache[? _input_param] = _param;
+      global.__localizationStringCache[? _input_param] = _param;
 			return _param;
 		}
-				
-        global.__localizationStringCache[? _input_param] = _temp_translator;
+
+    global.__localizationStringCache[? _input_param] = _temp_translator;
 		return _temp_translator;
 	}
-	
-	if (variable_struct_exists(_translator, _param)) {
-		var _result = variable_struct_get(_translator, _param);
-        if (ds_exists(global.__localizationStringCache, ds_type_map)) global.__localizationStringCache[? _input_param] = _result;
-        return _result;
+
+  if (variable_struct_exists(_translator, _param)) {
+    var _result = variable_struct_get(_translator, _param);
+    if (ds_exists(global.__localizationStringCache, ds_type_map)) global.__localizationStringCache[? _input_param] = _result;
+    return _result;
 	}
 	
-	if (_hasFallBackLocale) {
-		if (variable_struct_exists(_translatorFallBackLocale, _param)) {
-			var _result = variable_struct_get(_translatorFallBackLocale, _param);
-            global.__localizationStringCache[? _input_param] = _result;
-            return _result;
-		}
-	}
-	
-	return _param;
+  if (_hasFallBackLocale) {
+    if (variable_struct_exists(_translatorFallBackLocale, _param)) {
+      var _result = variable_struct_get(_translatorFallBackLocale, _param);
+      global.__localizationStringCache[? _input_param] = _result;
+      return _result;
+    }
+  }
+
+  return _param;
 }
 
 /// @func	reloadValuesWhenExchanged();

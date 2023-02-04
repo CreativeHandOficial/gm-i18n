@@ -1,0 +1,21 @@
+{
+  "FolderOrderSettings": [
+    {"name":"Fonts","order":7,"path":"folders/Fonts.yy",},
+    {"name":"Objects","order":9,"path":"folders/Objects.yy",},
+    {"name":"Rooms","order":10,"path":"folders/Rooms.yy",},
+    {"name":"Sprites","order":1,"path":"folders/Sprites.yy",},
+    {"name":"GMi18n","order":12,"path":"folders/GMi18n.yy",},
+    {"name":"Objects","order":3,"path":"folders/GMi18n/Objects.yy",},
+    {"name":"Scripts","order":4,"path":"folders/GMi18n/Scripts.yy",},
+  ],
+  "ResourceOrderSettings": [
+    {"name":"utilsGmI18n","order":1,"path":"scripts/utilsGmI18n/utilsGmI18n.yy",},
+    {"name":"oDebug","order":2,"path":"objects/oDebug/oDebug.yy",},
+    {"name":"rText","order":1,"path":"rooms/rText/rText.yy",},
+    {"name":"oText","order":3,"path":"objects/oText/oText.yy",},
+    {"name":"oSetupi18n","order":1,"path":"objects/oSetupi18n/oSetupi18n.yy",},
+    {"name":"oWelcome","order":4,"path":"objects/oWelcome/oWelcome.yy",},
+    {"name":"sBrand","order":1,"path":"sprites/sBrand/sBrand.yy",},
+    {"name":"oLang","order":1,"path":"objects/oLang/oLang.yy",},
+  ],
+}

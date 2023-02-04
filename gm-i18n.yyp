@@ -1,4 +1,33 @@
 {
+  "resourceType": "GMProject",
+  "resourceVersion": "1.6",
+  "name": "gm-i18n",
+  "AudioGroups": [
+    {"resourceType":"GMAudioGroup","resourceVersion":"1.3","name":"audiogroup_default","targets":-1,},
+  ],
+  "configs": {
+    "children": [],
+    "name": "Default",
+  },
+  "defaultScriptType": 1,
+  "Folders": [
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Fonts","folderPath":"folders/Fonts.yy","order":7,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Objects","folderPath":"folders/Objects.yy","order":9,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Rooms","folderPath":"folders/Rooms.yy","order":10,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Sprites","folderPath":"folders/Sprites.yy","order":1,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"GMi18n","folderPath":"folders/GMi18n.yy","order":0,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Objects","folderPath":"folders/GMi18n/Objects.yy","order":0,},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Scripts","folderPath":"folders/GMi18n/Scripts.yy","order":0,},
+  ],
+  "IncludedFiles": [
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"en-US.json","CopyToMask":-1,"filePath":"datafiles/GMi18n",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"es-ES.json","CopyToMask":-1,"filePath":"datafiles/GMi18n",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"pt-BR.json","CopyToMask":-1,"filePath":"datafiles/GMi18n",},
+  ],
+  "isEcma": false,
+  "MetaData": {
+    "IDEVersion": "2023.1.0.58",
+  },
   "resources": [
     {"id":{"name":"utilsGmI18n","path":"scripts/utilsGmI18n/utilsGmI18n.yy",},"order":1,},
     {"id":{"name":"oDebug","path":"objects/oDebug/oDebug.yy",},"order":2,},
@@ -13,52 +42,11 @@
     {"id":{"name":"oLang","path":"objects/oLang/oLang.yy",},"order":1,},
     {"id":{"name":"rMain","path":"rooms/rMain/rMain.yy",},"order":0,},
   ],
-  "Options": [
-    {"name":"Amazon Fire","path":"options/amazonfire/options_amazonfire.yy",},
-    {"name":"Android","path":"options/android/options_android.yy",},
-    {"name":"iOS","path":"options/ios/options_ios.yy",},
-    {"name":"Linux","path":"options/linux/options_linux.yy",},
-    {"name":"macOS","path":"options/mac/options_mac.yy",},
-    {"name":"Main","path":"options/main/options_main.yy",},
-    {"name":"tvOS","path":"options/tvos/options_tvos.yy",},
-    {"name":"Windows","path":"options/windows/options_windows.yy",},
-    {"name":"HTML5","path":"options/html5/options_html5.yy",},
-  ],
-  "isDnDProject": false,
-  "isEcma": false,
-  "tutorialPath": "",
-  "configs": {
-    "name": "Default",
-    "children": [],
-  },
   "RoomOrderNodes": [
     {"roomId":{"name":"rMain","path":"rooms/rMain/rMain.yy",},},
     {"roomId":{"name":"rText","path":"rooms/rText/rText.yy",},},
   ],
-  "Folders": [
-    {"folderPath":"folders/Sprites.yy","order":1,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Fonts.yy","order":7,"resourceVersion":"1.0","name":"Fonts","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Objects.yy","order":9,"resourceVersion":"1.0","name":"Objects","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Rooms.yy","order":10,"resourceVersion":"1.0","name":"Rooms","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Scripts.yy","order":11,"resourceVersion":"1.0","name":"Scripts","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/Scripts/gmi18n.yy","order":1,"resourceVersion":"1.0","name":"gmi18n","tags":[],"resourceType":"GMFolder",},
-  ],
-  "AudioGroups": [
-    {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
-  ],
   "TextureGroups": [
-    {"isScaled":true,"autocrop":true,"border":2,"mipsToGenerate":0,"groupParent":null,"targets":-1,"resourceVersion":"1.3","name":"Default","resourceType":"GMTextureGroup",},
+    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"targets":-1,},
   ],
-  "IncludedFiles": [
-    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"PT-br.json","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"en-US.json","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles","resourceVersion":"1.0","name":"es-ES.json","resourceType":"GMIncludedFile",},
-  ],
-  "MetaData": {
-    "IDEVersion": "2.3.4.583",
-  },
-  "resourceVersion": "1.4",
-  "name": "gm-i18n",
-  "tags": [],
-  "resourceType": "GMProject",
 }
