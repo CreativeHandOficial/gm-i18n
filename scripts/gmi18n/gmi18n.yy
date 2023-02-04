@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "gmi18n",
-    "path": "folders/Scripts/gmi18n.yy",
+    "name": "Scripts",
+    "path": "folders/GMi18n/Scripts.yy",
   },
 }

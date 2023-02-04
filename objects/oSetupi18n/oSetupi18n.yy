@@ -11,7 +11,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "Objects",
-    "path": "folders/Objects.yy",
+    "path": "folders/GMi18n/Objects.yy",
   },
   "parentObjectId": null,
   "persistent": true,

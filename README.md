@@ -44,7 +44,7 @@ This function is responsible for configuring the creation of the locations confi
 
 > I recommend using the object `oSetupi18n` to speed up initial setup
 
-```
+```js
 @desc Method for configuring in18 within your project, using locations as parameters. The default location. And a return location if there is no requested structure.
 @param	{array}  _locales*		    Required Locales configuration array, must contain code, file and lang
 @param	{string} _defaultLocale*  Required Setting the default location
@@ -70,12 +70,12 @@ gmi18nSetup(locales, defaultLocale, fallBackLocale);
 
 This function is responsible for returning the text that was configured in the json file of the chosen location
 
-```
-@desc    Method responsible for returning the text within the .json file of the previously chosen location
-@param	 {string} _param*  | Required | Structure created within your .json localization file
-@param	 {string} _varName | Optional | The name of the variable that must remain static
-@returns {string} Returns the text chosen in the parameter
-@example
+```js
+// @desc    Method responsible for returning the text within the .json file of the previously chosen location
+// @param	 {string} _param*  | Required | Structure created within your .json localization file
+// @param	 {string} _varName | Optional | The name of the variable that must remain static
+// @returns {string} Returns the text chosen in the parameter
+// @example
 
 // Search for the welcome text according to the chosen location
 draw_text(x, y, useTranslation('welcome'));
@@ -93,7 +93,7 @@ It is possible to abbreviate the `useTranslation()` call, to make the code less 
 
 Example:
 
-```
+```js
 // Create
 t = method(self, useTranslation);
 
@@ -106,7 +106,7 @@ draw_text(x, y, t('welcome'));
 
 Method responsible for updating objects' create event variables
 
-```
+```js
 // Begin Step
 
 reloadValuesWhenExchanged();
@@ -117,10 +117,10 @@ reloadValuesWhenExchanged();
 
 Change your current location
 
-```
-@desc     Method responsible for making the language localization change
-@param    {string} _locale* Required Location to be changed
-@example
+```js
+// @desc     Method responsible for making the language localization change
+// @param    {string} _locale* Required Location to be changed
+// @example
 
 // Changing the language to pt-BR
 
@@ -131,7 +131,7 @@ switchLocale("pt-BR");
 
 Returns the current location code
 
-```
+```js
 @desc    Returns the current chosen location
 @returns {string} _locale Return the code
 @example
@@ -145,10 +145,10 @@ getCurrentLocale();
 
 Returns an array with all the locations configured during setup
 
-```
-@desc    Returns an array with all the locations configured during setup
-@returns {Array} _locales Return all locations configured in the setup
-@example
+```js
+// @desc    Returns an array with all the locations configured during setup
+// @returns {Array} _locales Return all locations configured in the setup
+// @example
 
 // Returns the following array:
 // [
