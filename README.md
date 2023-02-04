@@ -45,11 +45,11 @@ This function is responsible for configuring the creation of the locations confi
 > I recommend using the object `oSetupi18n` to speed up initial setup
 
 ```js
-@desc Method for configuring in18 within your project, using locations as parameters. The default location. And a return location if there is no requested structure.
-@param	{array}  _locales*		    Required Locales configuration array, must contain code, file and lang
-@param	{string} _defaultLocale*  Required Setting the default location
-@param	{string} _fallBackLocale  Optional Setting the return location, if it does not exist at the current location
-@example
+// @desc Method for configuring in18 within your project, using locations as parameters. The default location. And a return location if there is no requested structure.
+// @param	{array}  _locales*		    Required Locales configuration array, must contain code, file and lang
+// @param	{string} _defaultLocale*  Required Setting the default location
+// @param	{string} _fallBackLocale  Optional Setting the return location, if it does not exist at the current location
+// @example
 
 // Configuring gmi18n to generate the information needed to initialize it.
 
